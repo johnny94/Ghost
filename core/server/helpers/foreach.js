@@ -19,6 +19,8 @@ foreach = function (context, options) {
         columns = options.hash.columns,
         length = _.size(context),
         limit = parseInt(options.hash.limit, 10) || length,
+        from = parseInt(options.hash.from, 10) || 1,
+        to = parseInt(options.hash.to, 10) || (from - 1) + limit,
         output = '',
         data,
         contextPath;
@@ -59,13 +61,20 @@ foreach = function (context, options) {
     }
 
     function iterateCollection(context) {
-        var count = 1;
+        var count = 1,
+            current = 1;
 
         _.each(context, function (item, key) {
-            if (count <= limit) {
-                execIteration(key, count - 1, count === limit);
+            if (current < from) {
+                current += 1;
+                return;
+            }
+
+            if (current <= to) {
+                execIteration(key, current - 1, count === limit);
             }
             count += 1;
+            current += 1;
         });
     }
 
