@@ -418,5 +418,21 @@ describe('{{#foreach}} helper', function () {
             shouldCompileToExpected(templateString, arrayHash, expected);
             shouldCompileToExpected(templateString, objectHash, expected);
         });
+
+        it('@first in foreach with from 2 and to 4', function () {
+            var templateString = '<ul>{{#foreach posts from="2" to="4"}}{{#if @first}}<li>{{title}}</li>{{/if}}{{/foreach}}</ul>',
+                expected = '<ul><li>second</li></ul>';
+
+            shouldCompileToExpected(templateString, arrayHash, expected);
+            shouldCompileToExpected(templateString, objectHash, expected);
+        });
+
+        it('@last in foreach with from 2 and to 4', function () {
+            var templateString = '<ul>{{#foreach posts from="2" to="4"}}{{#if @last}}<li>{{title}}</li>{{/if}}{{/foreach}}</ul>',
+                expected = '<ul><li>fourth</li></ul>';
+
+            shouldCompileToExpected(templateString, arrayHash, expected);
+            shouldCompileToExpected(templateString, objectHash, expected);
+        });
     });
 });

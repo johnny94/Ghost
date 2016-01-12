@@ -42,7 +42,7 @@ foreach = function (context, options) {
             data.key = field;
             data.index = index;
             data.number = index + 1;
-            data.first = index === 0;
+            data.first = index === from - 1; // From uses 1-indexed, but array uses 0-indexed.
             data.last = !!last;
             data.even = index % 2 === 1;
             data.odd = !data.even;
@@ -71,7 +71,7 @@ foreach = function (context, options) {
             }
 
             if (current <= to) {
-                execIteration(key, current - 1, count === limit);
+                execIteration(key, current - 1, current === to);
             }
             count += 1;
             current += 1;
